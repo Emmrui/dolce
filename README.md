@@ -1,78 +1,133 @@
-# Dolce — second-hand clothes marketplace
+# Dolce 🛍️
+> A mobile-first second-hand clothes marketplace for Israel — buy and sell with Bit payments.
 
-## Stack
-- React Native (Expo)
-- Firebase (Auth + Firestore + Storage)
-- Navigation: React Navigation v6
-- Fonts: Playfair Display + Inter
+---
 
-## Setup
+## Prerequisites — install these first
 
-### 1. Install dependencies
+| Tool | Why | Download |
+|---|---|---|
+| **Node.js** (v18+) | Runs the app | [nodejs.org](https://nodejs.org) |
+| **Git** | Version control | [git-scm.com](https://git-scm.com) |
+| **Expo Go** app | Preview on your phone | App Store / Google Play |
+
+> You do NOT need to install Android Studio or Xcode. Expo Go is enough to run the app on your phone.
+
+---
+
+## Getting started
+
+### 1. Clone the repo
+```bash
+git clone https://github.com/YOUR_USERNAME/dolce.git
+cd dolce
+```
+
+### 2. Install dependencies
 ```bash
 npm install
 npx expo install @expo-google-fonts/playfair-display @expo-google-fonts/inter
 ```
 
-### 2. Add Firebase config
-Create a `.env` file at the root (copy from `.env.example`):
+### 3. Set up Firebase
+
+Ask **Emma** to share the `.env` file with you directly (never commit this to GitHub).  
+Place it at the root of the project. It looks like this:
+
 ```
-EXPO_PUBLIC_FIREBASE_API_KEY=
-EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=
-EXPO_PUBLIC_FIREBASE_PROJECT_ID=
-EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=
-EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
-EXPO_PUBLIC_FIREBASE_APP_ID=
+EXPO_PUBLIC_FIREBASE_API_KEY=...
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=...
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=...
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=...
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=...
+EXPO_PUBLIC_FIREBASE_APP_ID=...
 ```
 
-### 3. Firestore indexes needed
-In Firebase console, add these composite indexes:
-- `listings`: `status ASC, createdAt DESC`
-- `listings`: `status ASC, category ASC, createdAt DESC`
-- `listings`: `sellerId ASC, createdAt DESC`
-
-### 4. Firebase Storage rules
-```
-rules_version = '2';
-service firebase.storage {
-  match /b/{bucket}/o {
-    match /listings/{listingId}/{fileName} {
-      allow read: if true;
-      allow write: if request.auth != null;
-    }
-  }
-}
-```
-
-### 5. Run
+### 4. Run the app
 ```bash
 npx expo start
 ```
 
+A QR code will appear in the terminal. Scan it with:
+- **iPhone** → Camera app
+- **Android** → Expo Go app
+
+The app will open on your phone instantly. Any code change you save will refresh it automatically.
+
+---
+
 ## Project structure
 ```
-src/
-  screens/
-    auth/         LoginScreen, SignUpScreen
-    buyer/        ShopScreen, ListingDetailScreen
-    seller/       SellScreen
-    shared/       ProfileScreen
-  services/
-    firebase.ts   Firebase init
-    authService.ts  Sign up / login / user management
-    listingsService.ts  CRUD for listings + image upload
-  hooks/
-    useAuth.tsx   Auth context + real-time user sync
-  navigation/
-    AppNavigator.tsx  Auth stack + main tabs
-  utils/
-    theme.ts      Colors, fonts, spacing
+dolce/
+├── App.tsx                        # Entry point
+├── src/
+│   ├── screens/
+│   │   ├── auth/
+│   │   │   ├── LoginScreen.tsx    # Login page
+│   │   │   └── SignUpScreen.tsx   # Sign up page
+│   │   ├── buyer/
+│   │   │   ├── ShopScreen.tsx     # Main feed — browse listings
+│   │   │   └── ListingDetailScreen.tsx  # Item detail + Bit checkout
+│   │   ├── seller/
+│   │   │   └── SellScreen.tsx     # Create a new listing
+│   │   └── shared/
+│   │       └── ProfileScreen.tsx  # Profile — listings, purchases, mode toggle
+│   ├── services/
+│   │   ├── firebase.ts            # Firebase connection
+│   │   ├── authService.ts         # Sign up / login / user management
+│   │   └── listingsService.ts     # Create / fetch / update listings
+│   ├── hooks/
+│   │   └── useAuth.tsx            # Auth state shared across the app
+│   ├── navigation/
+│   │   └── AppNavigator.tsx       # Screen routing
+│   └── utils/
+│       └── theme.ts               # Colors, fonts, spacing
 ```
 
-## Bit payment
-The current implementation uses a Bit deep link (`bitpay.onelink.me`) which opens the Bit app pre-filled with the amount and item title. The seller's phone number should be stored at listing creation and passed in the link for a full flow.
+---
 
-## Shipping options (Israel)
-- **Courier**: iPost, Cargo, Tik-tak — integrate via their business APIs for label generation
-- **Pick-up points**: Supersol, Ksp, Yellow — sellers drop off, buyers collect
-- **Self pickup**: coordinate via in-app chat (chat feature TBD)
+## How the app works
+
+- **One account** for both buying and selling — toggle between modes in your profile
+- **Browse** listings by category, search by title or city
+- **Sell** — upload photos, set price, choose delivery options
+- **Pay with Bit** — tapping "Pay with bit" opens the Bit app pre-filled with the amount
+
+---
+
+## Payments — Bit
+
+Bit is a peer-to-peer Israeli payment app. No backend needed — buyer opens Bit, pays the seller directly on their phone. The seller confirms receipt and marks the item as sold.
+
+---
+
+## Shipping options in Israel
+
+| Option | How it works |
+|---|---|
+| **Courier** (iPost, Cargo) | Seller schedules pickup, buyer receives at home |
+| **Pick-up point** | Drop off at Supersol / Ksp / Yellow, buyer collects nearby |
+| **Self pickup** | Coordinate a meetup via chat |
+
+---
+
+## Common issues
+
+**`npx expo start` fails**  
+→ Make sure Node.js is installed: `node -v` should show v18 or higher
+
+**App doesn't load on phone**  
+→ Make sure your phone and computer are on the same WiFi network
+
+**Firebase errors**  
+→ Check that your `.env` file is at the root of the project and has no typos
+
+---
+
+## Contributing
+
+1. Create a branch: `git checkout -b feature/your-feature`
+2. Make your changes
+3. Commit: `git commit -m "describe what you did"`
+4. Push: `git push origin feature/your-feature`
+5. Open a Pull Request on GitHub
