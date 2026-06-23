@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import {
   View, Text, FlatList, TouchableOpacity, Image,
-  StyleSheet, TextInput, RefreshControl, ActivityIndicator,
+  StyleSheet, TextInput, RefreshControl, ActivityIndicator, SafeAreaView,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { fetchListings, Listing, Category } from '../../services/listingsService'
@@ -75,7 +75,7 @@ export default function ShopScreen({ navigation }: any) {
   )
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.logo}>Dolce<Text style={styles.dot}>.</Text></Text>
         <Ionicons name="notifications-outline" size={22} color={colors.dark} />
@@ -125,7 +125,7 @@ export default function ShopScreen({ navigation }: any) {
         }
         renderItem={renderItem}
       />
-    </View>
+    </SafeAreaView>
   )
 }
 

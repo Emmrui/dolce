@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import {
   View, Text, TouchableOpacity, FlatList, StyleSheet,
-  ActivityIndicator, Alert,
+  ActivityIndicator, Alert, SafeAreaView,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { useAuth } from '../../hooks/useAuth'
@@ -48,7 +48,7 @@ export default function ProfileScreen() {
   const initials = dolceUser.displayName.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View style={styles.avatar}><Text style={styles.avatarText}>{initials}</Text></View>
         <Text style={styles.name}>{dolceUser.displayName}</Text>
@@ -126,7 +126,7 @@ export default function ProfileScreen() {
         <Ionicons name="log-out-outline" size={18} color={colors.mid} />
         <Text style={styles.logoutText}>Log out</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   )
 }
 

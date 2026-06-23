@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   View, Text, TextInput, TouchableOpacity,
-  StyleSheet, KeyboardAvoidingView, Platform, Alert, ActivityIndicator,
+  StyleSheet, KeyboardAvoidingView, Platform, Alert, ActivityIndicator, SafeAreaView,
 } from 'react-native'
 import { logIn } from '../../services/authService'
 import { colors, radius, spacing } from '../../utils/theme'
@@ -24,8 +24,9 @@ export default function LoginScreen({ navigation }: any) {
   }
 
   return (
+    <SafeAreaView style={styles.container}>
     <KeyboardAvoidingView
-      style={styles.container}
+      style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <View style={styles.inner}>
@@ -61,6 +62,7 @@ export default function LoginScreen({ navigation }: any) {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 

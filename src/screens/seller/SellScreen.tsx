@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   View, Text, TextInput, TouchableOpacity, ScrollView,
-  StyleSheet, Alert, ActivityIndicator, Image,
+  StyleSheet, Alert, ActivityIndicator, Image, SafeAreaView,
 } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import { Ionicons } from '@expo/vector-icons'
@@ -85,7 +85,8 @@ export default function SellScreen({ navigation }: any) {
   }
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+    <SafeAreaView style={{ flex: 1, backgroundColor: colors.cream }}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
       <View style={styles.header}>
         <Text style={styles.title}>List an item</Text>
         <Text style={styles.sub}>Fill in the details to publish</Text>
@@ -179,6 +180,7 @@ export default function SellScreen({ navigation }: any) {
         }
       </TouchableOpacity>
     </ScrollView>
+    </SafeAreaView>
   )
 }
 

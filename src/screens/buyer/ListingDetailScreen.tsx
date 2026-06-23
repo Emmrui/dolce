@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
   View, Text, Image, ScrollView, TouchableOpacity,
-  StyleSheet, ActivityIndicator, Linking, Alert,
+  StyleSheet, ActivityIndicator, Linking, Alert, SafeAreaView,
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { getListing, Listing } from '../../services/listingsService'
@@ -56,7 +56,7 @@ export default function ListingDetailScreen({ route, navigation }: any) {
   const total = listing.price + shippingFee + serviceFee
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <View style={styles.imgWrap}>
           {listing.images[0]
@@ -149,7 +149,7 @@ export default function ListingDetailScreen({ route, navigation }: any) {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   )
 }
 

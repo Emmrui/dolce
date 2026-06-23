@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {
   View, Text, TextInput, TouchableOpacity, StyleSheet,
-  KeyboardAvoidingView, Platform, Alert, ActivityIndicator, ScrollView,
+  KeyboardAvoidingView, Platform, Alert, ActivityIndicator, ScrollView, SafeAreaView,
 } from 'react-native'
 import { signUp } from '../../services/authService'
 import { colors, radius, spacing } from '../../utils/theme'
@@ -30,8 +30,9 @@ export default function SignUpScreen({ navigation }: any) {
   }
 
   return (
+    <SafeAreaView style={styles.container}>
     <KeyboardAvoidingView
-      style={styles.container}
+      style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
       <ScrollView contentContainerStyle={styles.inner} keyboardShouldPersistTaps="handled">
@@ -71,6 +72,7 @@ export default function SignUpScreen({ navigation }: any) {
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>
+    </SafeAreaView>
   )
 }
 
